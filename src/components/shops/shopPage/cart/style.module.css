@@ -1,0 +1,96 @@
+.cartWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  box-shadow: 3px 3px 25px rgba(44, 98, 156, 0.20);
+  padding: 30px 40px;
+  border-radius: 25px;
+  margin-top: 20px;
+  min-width: 300px;
+}
+
+.cartWrapper>h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.cartWrapper>button {
+  margin-bottom: 20px;
+  border: none;
+  background-color: transparent;
+  color: gray;
+  cursor: pointer;
+}
+
+.cartItems {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  border: 2px solid gray;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.cartItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.cartEmpty {
+  color: gray;
+}
+
+.cartTotal {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.divTime>input {
+  padding: 5px;
+}
+
+.hideDiv {
+  display: none;
+}
+
+.formSendOrder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sw>input {
+  padding: 5px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: 2px solid gray;
+}
+
+.formSendOrder>button {
+  margin-top: 20px;
+  width: 80%;
+  padding: 10px;
+  border-radius: 35px;
+  border: none;
+  color: white;
+  font-weight: bold;
+  background-color: #24a0ed;
+  cursor: pointer;
+}
+
+.formSendOrder>button:disabled {
+  background-color: lightgray;
+  color: gray;
+  cursor: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .cartWrapper>button {
+    cursor: none;
+  }
+}

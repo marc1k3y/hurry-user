@@ -1,0 +1,11 @@
+.votesCountWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: goldenrod;
+  margin-right: auto;
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+  color: white;
+}

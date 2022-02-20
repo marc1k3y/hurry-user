@@ -1,0 +1,29 @@
+.rateCountWrapper {
+  font-size: 24px;
+  color: goldenrod;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.smallLoader {
+  margin-left: 10px;
+  margin-bottom: 5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 5px dashed goldenrod;
+  animation: rotate 0.5s infinite linear;
+}
+
+@keyframes rotate {
+  from {
+      transform: rotate(0deg) scale(0.7);
+  }
+  to {
+      transform: rotate(360deg) scale(1.4);
+      border-style: solid;
+      border-color: gold;
+  }
+}

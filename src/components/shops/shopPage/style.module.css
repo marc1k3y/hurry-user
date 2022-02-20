@@ -1,0 +1,115 @@
+.shopPageWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+.shopPageSwitch {
+  display: flex;
+  gap: 10px;
+  background-color: white;
+  padding: 5px;
+  border-radius: 25px;
+}
+
+.shopPageSwitch>div {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.shopPageSwitch>div:last-child {
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+
+.shopPageSwitch>div:first-child {
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+}
+
+.shopBlock {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  padding: 30px;
+  border-radius: 25px;
+  background-color: white;
+  box-shadow: 3px 3px 25px rgba(44, 98, 156, 0.20);
+}
+
+.rateControl {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.rateControl>button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.rateControl>button:disabled {
+  display: none;
+}
+
+.rateControl img {
+  width: 20px;
+}
+
+.shopBlock>h2 {
+  text-align: center;
+  font-size: 42px;
+  margin-bottom: 20px;
+}
+
+.shopAddr {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.posCardsWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  text-align: center;
+  gap: 10px;
+}
+
+.posCard {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border: 2px solid gray;
+  padding: 10px;
+  border-radius: 10px;
+  width: 100px;
+}
+
+.posCard>button {
+  border: none;
+  background-color: goldenrod;
+  padding: 5px;
+  border-radius: 15px;
+  color: white;
+  cursor: pointer;
+}
+
+.posCard>button:disabled {
+  background-color: lightgray;
+  color: gray;
+  cursor: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .posCard>button, .rateControl>button, .shopPageSwitch>div {
+    cursor: none;
+  }
+}
