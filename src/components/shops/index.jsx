@@ -10,7 +10,7 @@ export const Shops = () => {
   console.log("render shop")
   const uid = localStorage.getItem("uid")
   const { t } = useSelector(state => state.lang)
-  const [locFilter, setLocFilter] = useState(true)
+  const [locFilter, setLocFilter] = useState(false)
   const [uCity, setUCity] = useState(null)
   const [shops, setShops] = useState([])
   const [skip, setSkip] = useState(0)
@@ -21,11 +21,7 @@ export const Shops = () => {
       setLoading(true)
       await axios.get(`${host}user/city?uid=${uid}`)
         .then((res) => {
-          if (res.data) {
-            setUCity(res.data)
-          } else {
-            setLocFilter(true)
-          }
+          setUCity(res.data)
         })
         .finally(() => setLoading(false))
     }
