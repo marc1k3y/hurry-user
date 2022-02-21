@@ -162,23 +162,23 @@ export const Admin = () => {
             <button onClick={genConnId}>{t?.profile.genBtn}</button>}
         </div>}
       {chatId && <div className={cn.changePass}>
-        <div>Change password</div>
+        <div>{t?.profile.changePass}</div>
         <div className={cn.changePassForm}>
           <input
-            placeholder="new password"
+            placeholder={t?.profile.newPassPlc}
             minLength="8"
             maxLength="14"
             type="password"
             value={newPass}
             onChange={(e) => setNewPass(e.target.value)} />
           {newPass.length > 7 && <input
-            placeholder="repeat password"
+            placeholder={t?.profile.repPassPlc}
             minLength="8"
             maxLength="14"
             type="password"
             value={repeatPass}
             onChange={(e) => setRepeatPass(e.target.value)} />}
-          {(newPass === repeatPass && repeatPass.length > 0) && <button onClick={changePass}>change</button>}
+          {(newPass === repeatPass && repeatPass.length > 0) && <button onClick={changePass}>{t?.profile.changeBtn}</button>}
         </div>
       </div>}
       <GreenLine visible={greenLine}>{greenLineText}</GreenLine>
