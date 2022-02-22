@@ -22,15 +22,17 @@ export const Shops = () => {
 
   useEffect(() => {
     async function getUserInfo() {
+      setLoading(true)
       await axios.get(`${host}user/info?uid=${uid}`)
         .then((res) => {
-          setUCity(res.data.info.city)
+          setUCity(res.data.info?.city)
           if (!res.data.info) {
             dispatch(showHelpLineAction("Please fill required info"))
           } else if (!res.data.tgChatId) {
             dispatch(showHelpLineAction("Please connect with Telegram"))
           }
         })
+        .finally(() => setLoading(false))
     }
     getUserInfo()
   }, [uid, dispatch])
@@ -54,7 +56,7 @@ export const Shops = () => {
   if (loading) return <Loader />
 
   return (
-    <div className={cn.shopsWrapper} style={{ marginTop: helpShow && "80px" }}>
+    <div className={cn.shopsWrapper} style={{ marginTop: helpShow && "100px" }}>
       <div className={cn.shopsWw}>
         <h2>{t?.shops.windowTitle}</h2>
         <div className={cn.locationFilter}>

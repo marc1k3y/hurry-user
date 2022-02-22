@@ -100,7 +100,7 @@ export const ShopPage = () => {
   if (loading) return <Loader />
 
   return (
-    <div className={cn.shopPageWrapper} style={{ marginTop: helpShow && "70px" }}>
+    <div className={cn.shopPageWrapper} style={{ marginTop: helpShow && "90px" }}>
       <div className={cn.shopPageSwitch}>
         <div onClick={() => setShopSwitch(true)}
           style={{ backgroundColor: shopSwitch ? "goldenrod" : "", color: shopSwitch ? "white" : "gray" }}>

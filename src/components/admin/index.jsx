@@ -111,7 +111,7 @@ export const Admin = () => {
   if (loading) return <Loader />
 
   return (
-    <div className={cn.adminWrapper} style={{ marginTop: helpShow && "60px" }}>
+    <div className={cn.adminWrapper} style={{ marginTop: helpShow && "80px" }}>
       <button className={cn.logoutBtn} onClick={logout}>
         {t?.profile.logoutBtn}
       </button>
