@@ -1,15 +1,19 @@
 import cn from "./style.module.css"
 import axios from "axios"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { host } from "../../constants"
 import { Loader } from "../UI/loader"
+import { HelpLine } from "../UI/helpLine"
+import { showHelpLineAction } from "../../store/helpLine/actions"
 
 export const Shops = () => {
   console.log("render shop")
+  const dispatch = useDispatch()
   const uid = localStorage.getItem("uid")
   const { t } = useSelector(state => state.lang)
+  const { helpText, helpShow } = useSelector(state => state.helpLine)
   const [locFilter, setLocFilter] = useState(false)
   const [uCity, setUCity] = useState(null)
   const [shops, setShops] = useState([])
@@ -17,16 +21,19 @@ export const Shops = () => {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    async function getCity() {
-      setLoading(true)
-      await axios.get(`${host}user/city?uid=${uid}`)
+    async function getUserInfo() {
+      await axios.get(`${host}user/info?uid=${uid}`)
         .then((res) => {
-          setUCity(res.data)
+          setUCity(res.data.info.city)
+          if (!res.data.info) {
+            dispatch(showHelpLineAction("Please fill required info"))
+          } else if (!res.data.tgChatId) {
+            dispatch(showHelpLineAction("Please connect with Telegram"))
+          }
         })
-        .finally(() => setLoading(false))
     }
-    getCity()
-  }, [uid])
+    getUserInfo()
+  }, [uid, dispatch])
 
   useEffect(() => {
     async function getAll() {
@@ -47,7 +54,7 @@ export const Shops = () => {
   if (loading) return <Loader />
 
   return (
-    <div className={cn.shopsWrapper}>
+    <div className={cn.shopsWrapper} style={{ marginTop: helpShow && "80px" }}>
       <div className={cn.shopsWw}>
         <h2>{t?.shops.windowTitle}</h2>
         <div className={cn.locationFilter}>
@@ -82,6 +89,9 @@ export const Shops = () => {
           </button>
         </div>
       </div>
+      <HelpLine visible={helpShow}>
+        {helpText} <Link to="/profile">here</Link>
+      </HelpLine>
     </div >
   )
 }

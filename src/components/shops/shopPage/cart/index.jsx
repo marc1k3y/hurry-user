@@ -1,6 +1,6 @@
 import cn from "./style.module.css"
 import axios from "axios"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import { host } from "../../../../constants"
 import { arraySum } from "../../../../utils/arraySum"
@@ -9,22 +9,23 @@ import { RedLine } from "../../../UI/redLine"
 import { HelpLine } from "../../../UI/helpLine"
 import { useLocation } from "react-router-dom"
 import { Loader } from "../../../UI/loader"
+import { showSuccessLineAction, hideSuccessLineAction } from "../../../../store/successLine/actions"
+import { showHelpLineAction, hideHelpLineAction } from "../../../../store/helpLine/actions"
+import { showWrongLineAction, hideWrongLineAction } from "../../../../store/wrongLine/actions"
 
 export const Cart = ({ tgId, haveSw, currency, mount }) => {
   console.log("render cart")
+  const dispatch = useDispatch()
   const { pathname } = useLocation()
   const { t } = useSelector(state => state.lang)
+  const { helpText, helpShow } = useSelector(state => state.helpLine)
+  const { successText, successShow } = useSelector(state => state.successLine)
+  const { wrongText, wrongShow } = useSelector(state => state.wrongLine)
   const uid = localStorage.getItem("uid")
   const bid = pathname.split("/")[2]
   const [cart, setCart] = useState(null)
   const [pickUpTime, setPickUpTime] = useState("")
   const [sw, setSw] = useState("")
-  const [textGreenLine, setTextGreenLine] = useState(null)
-  const [greenLine, setGreenLine] = useState(false)
-  const [textRedLine, setTextRedLine] = useState(null)
-  const [redLine, setRedLine] = useState(false)
-  const [textHelpLine, setTextHelpLine] = useState(null)
-  const [helpLine, setHelpLine] = useState(null)
   const [loading, setLoading] = useState(false)
   const total = []
 
@@ -60,26 +61,23 @@ export const Cart = ({ tgId, haveSw, currency, mount }) => {
       sw: sw
     })
       .then(() => {
-        setTextGreenLine("Order sended, have a good day!")
-        setGreenLine(true)
+        dispatch(showSuccessLineAction("Order sended, have a good day!"))
         setCart(null)
         setSw("")
         setTimeout(() => {
-          setGreenLine(false)
+          dispatch(hideSuccessLineAction())
         }, 3000)
       })
       .catch((res) => {
         if (res.message.search(301) > 0) {
-          setTextHelpLine("Please fill info")
-          setHelpLine(true)
+          dispatch(showHelpLineAction("Please fill info"))
           setTimeout(() => {
-            setHelpLine(false)
+            dispatch(hideHelpLineAction())
           }, 4000)
         } else {
-          setTextRedLine("Wrong secret word :(")
-          setRedLine(true)
+          dispatch(showWrongLineAction("Wrong secret word :("))
           setTimeout(() => {
-            setRedLine(false)
+            dispatch(hideWrongLineAction())
           }, 4000)
         }
       })
@@ -142,9 +140,9 @@ export const Cart = ({ tgId, haveSw, currency, mount }) => {
         </div>
         {<button disabled={!tgId || loading || !cart}>{t?.cart.orderBtn}</button>}
       </form>
-      <GreenLine visible={greenLine}>{textGreenLine}</GreenLine>
-      <RedLine visible={redLine}>{textRedLine}</RedLine>
-      <HelpLine visible={helpLine}>{textHelpLine}</HelpLine>
+      <GreenLine visible={successShow}>{successText}</GreenLine>
+      <RedLine visible={wrongShow}>{wrongText}</RedLine>
+      <HelpLine visible={helpShow}>{helpText}</HelpLine>
     </div>
   )
 }

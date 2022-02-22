@@ -2,6 +2,7 @@ import cn from "./style.module.css"
 import axios from "axios"
 import { useLocation } from "react-router-dom"
 import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import like from "../../../assets/like.svg"
 import dislike from "../../../assets/dislike.svg"
 import { host } from "../../../constants"
@@ -10,12 +11,14 @@ import { HelpLine } from "../../UI/helpLine"
 import { VoteCount } from "../../picies/voteCount"
 import { RateCount } from "../../picies/rateCount"
 import { Loader } from "../../UI/loader"
-import { useSelector } from "react-redux"
+import { hideHelpLineAction, showHelpLineAction } from "../../../store/helpLine/actions"
 
 export const ShopPage = () => {
   console.log("render shop-page")
+  const dispatch = useDispatch()
   const { pathname } = useLocation()
   const { t } = useSelector(state => state.lang)
+  const { helpText, helpShow } = useSelector(state => state.helpLine)
   const uid = localStorage.getItem("uid")
   const bid = pathname.split("/")[2]
   const [shop, setShop] = useState(null)
@@ -24,7 +27,6 @@ export const ShopPage = () => {
   const [rate, setRate] = useState(null)
   const [sw, setSw] = useState(false)
   const [currency, setCurrency] = useState(null)
-  const [helpLine, setHelpLine] = useState(false)
   const [shopSwitch, setShopSwitch] = useState(true)
   const [rateRender, setRateRender] = useState(false)
   const [cartPushing, setCartPushing] = useState(false)
@@ -78,22 +80,27 @@ export const ShopPage = () => {
       setLoading(true)
       await axios.get(`${host}bus/shop?bid=${bid}`)
         .then((res) => {
+          if (!res.data.tgChatId) {
+            dispatch(showHelpLineAction("Business didn't complete registration"))
+          }
           setSw(!!res.data.info.secretWord)
           setCurrency(res.data.info.currency)
-          setHelpLine(!res.data.tgChatId)
           setShop(res.data)
           setMenu(res.data.menu.sort((a, b) => a.title > b.title ? 1 : -1))
         })
         .finally(() => setLoading(false))
     }
     mount && getInfo()
-    return () => mount = false
-  }, [bid])
+    return () => {
+      mount = false
+      dispatch(hideHelpLineAction())
+    }
+  }, [bid, dispatch])
 
   if (loading) return <Loader />
 
   return (
-    <div className={cn.shopPageWrapper} style={{ marginTop: helpLine && "70px" }}>
+    <div className={cn.shopPageWrapper} style={{ marginTop: helpShow && "70px" }}>
       <div className={cn.shopPageSwitch}>
         <div onClick={() => setShopSwitch(true)}
           style={{ backgroundColor: shopSwitch ? "goldenrod" : "", color: shopSwitch ? "white" : "gray" }}>
@@ -135,9 +142,7 @@ export const ShopPage = () => {
       <div style={{ display: shopSwitch ? "none" : "flex" }}>
         <Cart tgId={shop?.tgChatId} haveSw={sw} currency={currency} mount={!shopSwitch} />
       </div>
-      <HelpLine visible={helpLine}>
-        Business didn't complete registration
-      </HelpLine>
+      <HelpLine visible={helpShow}>{helpText}</HelpLine>
     </div>
   )
 }

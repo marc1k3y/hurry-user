@@ -7,6 +7,8 @@ import { useEffect, useState } from "react"
 import { host } from "../../constants"
 import { capFirst } from "../../utils/capFirst"
 import { logoutAction } from "../../store/auth/actions"
+import { showSuccessLineAction, hideSuccessLineAction } from "../../store/successLine/actions"
+import { showHelpLineAction, hideHelpLineAction } from "../../store/helpLine/actions"
 import { GreenLine } from "../UI/greenLine"
 import { HelpLine } from "../UI/helpLine"
 import { Loader } from "../UI/loader"
@@ -16,6 +18,8 @@ export const Admin = () => {
   const dispatch = useDispatch()
   const uid = localStorage.getItem("uid")
   const { t } = useSelector(state => state.lang)
+  const { helpText, helpShow } = useSelector(state => state.helpLine)
+  const { successText, successShow } = useSelector(state => state.successLine)
   const [chatId, setChatId] = useState(null)
   const [newPass, setNewPass] = useState("")
   const [repeatPass, setRepeatPass] = useState("")
@@ -26,19 +30,14 @@ export const Admin = () => {
   const [country, setCountry] = useState("")
   const [city, setCity] = useState("")
   const [loading, setLoading] = useState(false)
-  const [greenLineText, setGreenLineText] = useState(null)
-  const [greenLine, setGreenLine] = useState(false)
-  const [textHelpLine, setTextHelpLine] = useState(null)
-  const [helpLine, setHelpLine] = useState(false)
 
   async function changePass() {
     newPass === repeatPass &&
       await axios.put(`${host}user/changePass`, { uid, newPass })
         .then(() => {
-          setGreenLineText("Password changed")
-          setGreenLine(true)
+          dispatch(showSuccessLineAction("Password changed"))
           setTimeout(() => {
-            setGreenLine(false)
+            dispatch(hideSuccessLineAction())
           }, 4000)
           setNewPass("")
           setRepeatPass("")
@@ -51,6 +50,7 @@ export const Admin = () => {
 
   function logout() {
     dispatch(logoutAction())
+    dispatch(hideHelpLineAction())
   }
 
   async function sendInfo(e) {
@@ -65,11 +65,14 @@ export const Admin = () => {
       }
     })
       .then(() => {
-        setHelpLine(false)
-        setGreenLineText("Info saved!")
-        setGreenLine(true)
+        if (chatId) {
+          dispatch(hideHelpLineAction())
+        } else {
+          dispatch(showHelpLineAction("Please connect with Telegram bot"))
+        }
+        dispatch(showSuccessLineAction("Info saved"))
         setTimeout(() => {
-          setGreenLine(false)
+          dispatch(hideSuccessLineAction())
         }, 3000)
       })
       .finally(() => {
@@ -88,20 +91,18 @@ export const Admin = () => {
             setCountry(res.data.info.country)
             setCity(res.data.info.city)
             if (!res.data.tgChatId) {
-              setTextHelpLine("Please reg in Telegram bot")
-              setHelpLine(true)
+              dispatch(showHelpLineAction("Please connect with Telegram bot"))
             } else {
               setChatId(res.data.tgChatId)
             }
           } else {
-            setTextHelpLine("Please fill Nickname, Country and City")
-            setHelpLine(true)
+            dispatch(showHelpLineAction("Please fill Nickname, Country and City"))
           }
         })
         .finally(() => setLoading(false))
     }
     getInfo()
-  }, [uid])
+  }, [uid, dispatch])
 
   useEffect(() => {
     connId && axios.put(`${host}user/connect?uid=${uid}`, { connId })
@@ -110,7 +111,7 @@ export const Admin = () => {
   if (loading) return <Loader />
 
   return (
-    <div className={cn.adminWrapper} style={{ marginTop: helpLine && "60px" }}>
+    <div className={cn.adminWrapper} style={{ marginTop: helpShow && "60px" }}>
       <button className={cn.logoutBtn} onClick={logout}>
         {t?.profile.logoutBtn}
       </button>
@@ -181,8 +182,8 @@ export const Admin = () => {
           {(newPass === repeatPass && repeatPass.length > 0) && <button onClick={changePass}>{t?.profile.changeBtn}</button>}
         </div>
       </div>}
-      <GreenLine visible={greenLine}>{greenLineText}</GreenLine>
-      <HelpLine visible={helpLine}>{textHelpLine}</HelpLine>
+      <GreenLine visible={successShow}>{successText}</GreenLine>
+      <HelpLine visible={helpShow}>{helpText}</HelpLine>
     </div >
   )
 }
