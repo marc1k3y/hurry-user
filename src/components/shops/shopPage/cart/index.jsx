@@ -93,12 +93,12 @@ export const Cart = ({ tgId, haveSw, currency, mount }) => {
       setLoading(true)
       await axios.get(`${host}user/cart?uid=${uid}`)
         .then((res) => {
-          res.data.length && setCart(res.data)
+          res.data.length && setCart(res.data.filter(pos => bid in pos))
         })
         .finally(() => setLoading(false))
     }
     mount && getCart()
-  }, [uid, mount])
+  }, [uid, bid, mount])
 
   if (loading) return <Loader />
 
