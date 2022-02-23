@@ -35,7 +35,7 @@ export const Admin = () => {
     newPass === repeatPass &&
       await axios.put(`${host}user/changePass`, { uid, newPass })
         .then(() => {
-          dispatch(showSuccessLineAction("Password changed"))
+          dispatch(showSuccessLineAction(t?.successLine.passChanged))
           setTimeout(() => {
             dispatch(hideSuccessLineAction())
           }, 4000)
@@ -68,9 +68,9 @@ export const Admin = () => {
         if (chatId) {
           dispatch(hideHelpLineAction())
         } else {
-          dispatch(showHelpLineAction("Please connect with Telegram bot"))
+          dispatch(showHelpLineAction(t?.helpLine.tgConnect))
         }
-        dispatch(showSuccessLineAction("Info saved"))
+        dispatch(showSuccessLineAction(t?.successLine.infoSaved))
         setTimeout(() => {
           dispatch(hideSuccessLineAction())
         }, 3000)
@@ -91,18 +91,18 @@ export const Admin = () => {
             setCountry(res.data.info.country)
             setCity(res.data.info.city)
             if (!res.data.tgChatId) {
-              dispatch(showHelpLineAction("Please connect with Telegram bot"))
+              dispatch(showHelpLineAction(t?.helpLine.tgConnect))
             } else {
               setChatId(res.data.tgChatId)
             }
           } else {
-            dispatch(showHelpLineAction("Please fill Nickname, Country and City"))
+            dispatch(showHelpLineAction(t?.helpLine.fillInfo))
           }
         })
         .finally(() => setLoading(false))
     }
     getInfo()
-  }, [uid, dispatch])
+  }, [uid, dispatch, helpShow && t])
 
   useEffect(() => {
     connId && axios.put(`${host}user/connect?uid=${uid}`, { connId })

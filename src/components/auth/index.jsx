@@ -34,7 +34,7 @@ export const Auth = () => {
         }
       })
       .catch(() => {
-        setTextHelpLine("Please try again")
+        setTextHelpLine(t?.helpLine.tryAgain)
         setHelpLine(true)
         setTimeout(() => {
           setHelpLine(false)
@@ -51,7 +51,7 @@ export const Auth = () => {
         }
       })
       .catch(() => {
-        setTextHelpLine("Login already exist")
+        setTextHelpLine(t?.helpLine.loginExist)
         setHelpLine(true)
         setTimeout(() => {
           setHelpLine(false)

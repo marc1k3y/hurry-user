@@ -81,7 +81,7 @@ export const ShopPage = () => {
       await axios.get(`${host}bus/shop?bid=${bid}`)
         .then((res) => {
           if (!res.data.tgChatId) {
-            dispatch(showHelpLineAction("Business didn't complete registration"))
+            dispatch(showHelpLineAction(t?.helpLine.busNotReady))
           }
           setSw(!!res.data.info.secretWord)
           setCurrency(res.data.info.currency)
@@ -95,7 +95,7 @@ export const ShopPage = () => {
       mount = false
       dispatch(hideHelpLineAction())
     }
-  }, [bid, dispatch])
+  }, [bid, dispatch, helpShow && t])
 
   if (loading) return <Loader />
 

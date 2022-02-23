@@ -54,6 +54,28 @@ const en = {
     newPassPlc: "new password",
     repPassPlc: "repeat password",
     changeBtn: "change"
+  },
+  helpLine: {
+    helperName: "Eva",
+    tgConnect: "Please connect with Telegram Bot",
+    fillInfo: "Please fill Nickname, Country and City",
+    tryAgain: "Please try again",
+    loginExist: "Login already exist",
+    busNotReady: "Business didn't complete registration"
+  },
+  successLine: {
+    passChanged: "Password changed sucessful",
+    infoSaved: "Info saved",
+    orderSended: "Order sended, have a good day!"
+  },
+  wrongLine: {
+    badSw: "Wrong secret word :("
+  },
+  footer: {
+    bca: "buy coffee author"
+  },
+  links: {
+    here: "here"
   }
 }
 
@@ -111,6 +133,28 @@ const ru = {
     newPassPlc: "новый пароль",
     repPassPlc: "повторите пароль",
     changeBtn: "сменить"
+  },
+  helpLine: {
+    helperName: "Ева",
+    tgConnect: "Пожалуйста свжите аккаунт с Телеграм Ботом",
+    fillInfo: "Пожалуйста заполните информацию Никнейм, Страна и Город",
+    tryAgain: "Пожалуйста попробуйте ещё раз",
+    loginExist: "Такой логин уже используется",
+    busNotReady: "Заведение пока не готово принять заказ"
+  },
+  successLine: {
+    passChanged: "Пароль успешно изменён",
+    infoSaved: "Информация сохранена",
+    orderSended: "Заказ отправлен, хорошего дня!"
+  },
+  wrongLine: {
+    badSw: "Неправильное секретное слово :("
+  },
+  footer: {
+    bca: "купить кофе автору"
+  },
+  links: {
+    here: "здесь"
   }
 }
 

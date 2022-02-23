@@ -27,15 +27,15 @@ export const Shops = () => {
         .then((res) => {
           setUCity(res.data.info?.city)
           if (!res.data.info) {
-            dispatch(showHelpLineAction("Please fill required info"))
+            dispatch(showHelpLineAction(t?.helpLine.fillInfo))
           } else if (!res.data.tgChatId) {
-            dispatch(showHelpLineAction("Please connect with Telegram"))
+            dispatch(showHelpLineAction(t?.helpLine.tgConnect))
           }
         })
         .finally(() => setLoading(false))
     }
     getUserInfo()
-  }, [uid, dispatch])
+  }, [uid, dispatch, helpShow && t])
 
   useEffect(() => {
     async function getAll() {
@@ -92,7 +92,7 @@ export const Shops = () => {
         </div>
       </div>
       <HelpLine visible={helpShow}>
-        {helpText} <Link to="/profile">here</Link>
+        {helpText} <Link to="/profile">{t?.links.here}</Link>
       </HelpLine>
     </div >
   )

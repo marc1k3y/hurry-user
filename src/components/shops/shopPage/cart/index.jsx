@@ -61,7 +61,7 @@ export const Cart = ({ tgId, haveSw, currency, mount }) => {
       sw: sw
     })
       .then(() => {
-        dispatch(showSuccessLineAction("Order sended, have a good day!"))
+        dispatch(showSuccessLineAction(t?.successLine.orderSended))
         setCart(null)
         setSw("")
         setTimeout(() => {
@@ -70,12 +70,12 @@ export const Cart = ({ tgId, haveSw, currency, mount }) => {
       })
       .catch((res) => {
         if (res.message.search(301) > 0) {
-          dispatch(showHelpLineAction("Please fill info"))
+          dispatch(showHelpLineAction(t?.helpLine.fillInfo))
           setTimeout(() => {
             dispatch(hideHelpLineAction())
           }, 4000)
         } else {
-          dispatch(showWrongLineAction("Wrong secret word :("))
+          dispatch(showWrongLineAction(t?.wrongLine.badSw))
           setTimeout(() => {
             dispatch(hideWrongLineAction())
           }, 4000)
