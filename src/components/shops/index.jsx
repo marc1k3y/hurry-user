@@ -1,5 +1,6 @@
 import cn from "./style.module.css"
 import axios from "axios"
+import search from "../../assets/search.svg"
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
@@ -14,6 +15,7 @@ export const Shops = () => {
   const uid = localStorage.getItem("uid")
   const { t } = useSelector(state => state.lang)
   const { helpText, helpShow } = useSelector(state => state.helpLine)
+  const [query, setQuery] = useState("")
   const [locFilter, setLocFilter] = useState(false)
   const [uCity, setUCity] = useState(null)
   const [shops, setShops] = useState([])
@@ -44,6 +46,26 @@ export const Shops = () => {
         .then((res) => setShops(res.data.sort((a, b) => a.rate < b.rate ? 1 : -1)))
         .finally(() => setLoading(false))
     }
+    async function getForQuery() {
+      setLoading(true)
+      axios.get(`${host}bus/queryShops?query=${query}`)
+        .then((res) => setShops(res.data.sort((a, b) => a.rate < b.rate ? 1 : -1)))
+        .finally(() => setLoading(false))
+    }
+    const timer = setTimeout(() => {
+      query && getForQuery()
+    }, 1000)
+    !query.length && getAll()
+    return () => clearTimeout(timer)
+  }, [query])
+
+  useEffect(() => {
+    async function getAll() {
+      setLoading(true)
+      await axios.get(`${host}bus/shops?skip=${skip}&limit=5`)
+        .then((res) => setShops(res.data.sort((a, b) => a.rate < b.rate ? 1 : -1)))
+        .finally(() => setLoading(false))
+    }
     async function getLocal() {
       setLoading(true)
       await axios.get(`${host}bus/locShops?skip=${skip}&limit=5&city=${uCity}`)
@@ -59,6 +81,12 @@ export const Shops = () => {
     <div className={cn.shopsWrapper} style={{ marginTop: helpShow && "100px" }}>
       <div className={cn.shopsWw}>
         <h2>{t?.shops.windowTitle}</h2>
+        <div className={cn.searchCafes}>
+          <div className={cn.searchField}>
+            <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} />
+            <img src={search} alt="search" />
+          </div>
+        </div>
         <div className={cn.locationFilter}>
           <p>{t?.shops.locFilter}</p>
           <input
