@@ -160,7 +160,7 @@ export const Admin = () => {
             </CopyToClipboard>
             : t?.profile.genText}
           {!connId &&
-            <button onClick={genConnId} className={!chatId && cn.flashingConnBtn}>{t?.profile.genBtn}</button>}
+            <button onClick={genConnId} className={!chatId ? cn.flashingConnBtn : ""}>{t?.profile.genBtn}</button>}
         </div>}
       {chatId && <div className={cn.changePass}>
         <div>{t?.profile.changePass}</div>
