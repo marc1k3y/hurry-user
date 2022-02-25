@@ -85,7 +85,7 @@ const ru = {
     loginLabel: "Введите логин",
     passLabel: "Введите пароль",
     privacyPlc: "политика приватности",
-    loginBtn: "Логин",
+    loginBtn: "Войти",
     regBtn: "Регистрация",
     idha: "У меня нет аккаунта",
     iha: "У меня есть аккаунт",
