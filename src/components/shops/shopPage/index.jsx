@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 import like from "../../../assets/like.svg"
 import dislike from "../../../assets/dislike.svg"
 import address from "../../../assets/address.svg"
+import looking from "../../../assets/looking.svg"
 import { host } from "../../../constants"
 import { Cart } from "./cart"
 import { HelpLine } from "../../UI/helpLine"
@@ -126,10 +127,12 @@ export const ShopPage = () => {
         </div>
         <div className={cn.shopAddr}>
           <img src={address} alt="address" />
-          <div>
-            {shop?.info?.addr.country} {shop?.info?.addr.city}
-            <br /> {shop?.info?.addr.street} {shop?.info?.addr.build}
-          </div>
+          {shop?.info?.addr
+            ? <div>
+              {shop?.info?.addr.country} {shop?.info?.addr.city}
+              <br /> {shop?.info?.addr.street} {shop?.info?.addr.build}
+            </div>
+            : <img src={looking} alt="not address" />}
         </div>
         <div className={cn.posCardsWrapper}>
           {menu?.map((pos, index) =>
