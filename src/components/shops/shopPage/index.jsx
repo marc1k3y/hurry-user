@@ -127,7 +127,8 @@ export const ShopPage = () => {
         <div className={cn.shopAddr}>
           <img src={address} alt="address" />
           <div>
-            {shop?.info?.addr.country} {shop?.info?.addr.city} {shop?.info?.addr.street} {shop?.info?.addr.build}
+            {shop?.info?.addr.country} {shop?.info?.addr.city}
+            <br /> {shop?.info?.addr.street} {shop?.info?.addr.build}
           </div>
         </div>
         <div className={cn.posCardsWrapper}>
