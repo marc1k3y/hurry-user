@@ -137,9 +137,9 @@ export const ShopPage = () => {
         <div className={cn.posCardsWrapper}>
           {menu?.map((pos, index) =>
             <div key={index} className={cn.posCard}>
-              <div>{pos.title}</div>
-              <div>{pos.option}</div>
-              <div>{pos.price}</div>
+              <div className={cn.posTitle}>{pos.title}</div>
+              <div className={cn.posOption}>{pos.option}</div>
+              <div className={cn.posPrice}>{pos.price}</div>
               <button
                 disabled={cartPushing || loading || rate < 0 || !shop?.tgChatId}
                 onClick={() => pushToCart(pos.title, pos.option, pos.price)}

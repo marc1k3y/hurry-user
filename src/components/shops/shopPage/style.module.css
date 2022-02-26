@@ -33,7 +33,7 @@
   display: flex;
   flex-direction: column;
   margin-top: 20px;
-  padding: 30px;
+  padding: 30px 20px;
   border-radius: 25px;
   background-color: white;
   box-shadow: 3px 3px 25px rgba(44, 98, 156, 0.20);
@@ -108,10 +108,18 @@
   border: 2px solid gray;
   padding: 10px;
   border-radius: 10px;
-  width: 100px;
+  width: 120px;
+}
+
+.posTitle {
+  background-color: rgba(218,165,32, 0.7);
+  word-wrap: break-word;
+  padding: 5px;
+  border-radius: 10px;
 }
 
 .posCard>button {
+  margin-top: auto;
   border: none;
   background-color: goldenrod;
   padding: 5px;

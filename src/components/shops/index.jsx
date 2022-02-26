@@ -96,6 +96,7 @@ export const Shops = () => {
         </div>
         <div className={cn.shopsList}>
           {shops.map(shop =>
+            shop.tgChatId &&
             <div key={shop._id} className={cn.shopCard}>
               <Link to={`/shop/${shop._id}`}>
                 <h3>{shop.info?.title ?? "not named"}</h3>
