@@ -23,7 +23,6 @@ export const Admin = () => {
   const [chatId, setChatId] = useState(null)
   const [newPass, setNewPass] = useState("")
   const [repeatPass, setRepeatPass] = useState("")
-  const [isCopied, setIsCopied] = useState(false)
   const [connId, setConnId] = useState(null)
   const [nickname, setNickname] = useState("")
   const [faworiteDrink, setFaworiteDrink] = useState("")
@@ -151,12 +150,10 @@ export const Admin = () => {
       {nickname && country && city &&
         <div className={cn.connId}>
           {connId ?
-            <CopyToClipboard text={`/register ${connId}`} onCopy={() => setIsCopied(true)}>
-              {isCopied
-                ? <span className={cn.copied}>{t?.profile.copiedText}
-                  <a href="https://t.me/hurry_orders_bot">{t?.profile.botLink}</a>
-                </span>
-                : <span className={cn.forCopy}>{connId}</span>}
+            <CopyToClipboard text={`/register ${connId}`}>
+              <span className={cn.copied}>{t?.profile.copiedText}
+                <a href="https://t.me/hurry_orders_bot">{t?.profile.botLink}</a>
+              </span>
             </CopyToClipboard>
             : t?.profile.genText}
           {!connId &&
